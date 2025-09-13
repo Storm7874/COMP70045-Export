@@ -1,0 +1,8 @@
+{
+  "OTPID": "b905e70c-542b-4de0-9a30-675f4e6869f9",
+  "BlockSize": 256,
+  "BlockCount": 65536,
+  "CurrentBlockID": 0,
+  "PadFile": "N:\\UserData\\Documents\\Development\\Programming\\COMP70045-Master\\Core\\WPF04\\Resources\\Pads\\OTP.otp",
+  "MetaFile": "N:\\UserData\\Documents\\Development\\Programming\\COMP70045-Master\\Core\\WPF04\\Resources\\Pads\\OTPMeta.json"
+}

@@ -1,0 +1,138 @@
+﻿<!--Configuration XAML for the user interface-->
+    
+    <Window x:Class="WPF04.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF04"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="415">
+    <TabControl>
+        <TabItem Header="Messaging">
+            <Grid Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="37*"/>
+                    <RowDefinition Height="230*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="17*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24*"/>
+                    <ColumnDefinition Width="18*"/>
+                    <ColumnDefinition Width="41*"/>
+                </Grid.ColumnDefinitions>
+                <StatusBar Margin="0,38,0,0" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2">
+                    <StatusBarItem>
+                        <Label x:Name="ConnectionStatusLabel" Height="28" Width="110">
+                            <StackPanel Orientation="Horizontal">
+                                <Image x:Name="ConnectionIndicator" Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_red.png" />
+                                <AccessText Text="Disconnected" />
+                            </StackPanel>
+                        </Label>
+                    </StatusBarItem>
+                </StatusBar>
+
+                
+                <!--Frequency & RF Characteristics-->
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,5,202,0">
+                    <!--VFO-->
+                    <StackPanel Orientation="Vertical">
+                        <TextBox x:Name="VFODisplay" TextWrapping="Wrap" Text="868.600" Width="114" Height="44" Background="Black" Foreground="#FF00F6FF" FontSize="30"/>
+                        <Button x:Name="UpdateBaseRFParamsButton" Margin="5,2,5,0" Click="UpdateBaseRFParamsButton_Click">Update</Button>
+                    </StackPanel>
+
+                    <!--SF + PWR-->
+                    <StackPanel Margin="5,0,0,0">
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <TextBox x:Name="SFDisplay" HorizontalAlignment="Left" TextWrapping="Wrap" Text="12" VerticalAlignment="Top" Width="26" Height="20" Background="Black" Foreground="#FF00F6FF" FontSize="14" Grid.Column="1"/>
+                            <Label x:Name="SFLabel" Content="SF" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" Height="26" Width="22"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="PowerDisplay" HorizontalAlignment="Left" TextWrapping="Wrap" Text="-9" VerticalAlignment="Top" Width="25" Height="20" Background="Black" Foreground="#FF00F6FF" FontSize="14"/>
+                            <Label x:Name="PowerLabel" Content="Power" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" Height="26" Width="42"/>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                </StackPanel>
+
+                <!--Message Config Panel -->
+                <StackPanel Orientation="Vertical" Grid.Column="2">
+                    <Button x:Name="ConnectToRadioButton">Connect</Button>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="EncryptCheckbox" IsThreeState="False" Content="Encrypt" IsChecked="{Binding EncryptionRequired, Mode=TwoWay}"></CheckBox>
+                        <CheckBox x:Name="EncodeCheckbox" IsThreeState="False" Content="Encode" IsChecked="{Binding EncodingRequired, Mode=TwoWay}"></CheckBox>
+                        <CheckBox x:Name="RebroadcastCheckbox" IsThreeState="False" Content="RBR" IsChecked="{Binding RebroadcastRequired, Mode=TwoWay}"></CheckBox>
+                        <CheckBox x:Name="AckCheckbox" Content="ACK" IsChecked="{Binding AckRequired, Mode=TwoWay}"></CheckBox>
+
+                    </StackPanel>
+                </StackPanel>
+
+                
+                <!--Main Message Display-->
+                <!-- <TextBlock x:Name="MainTextDisplay" TextWrapping="Wrap" Text="" Background="#FFE9E9E9" Grid.ColumnSpan="3"  Grid.Row ="1"/> -->
+                <ListBox x:Name="MainTextDisplay"
+                         ItemsSource="{Binding DisplayMessages}"
+                         Background="#FFE9E9E9"
+                         Grid.ColumnSpan="3" Grid.Row="1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="6" Padding="6" Margin="4">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding messageSource}" Value="RX">
+                                                <Setter Property="Background" Value="LightCoral"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding messageSource}" Value="TX">
+                                                <Setter Property="Background" Value="LightBlue"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <StackPanel>
+                                    <!-- Show the message text -->
+                                    <TextBlock Text="{Binding messagePayload}" TextWrapping="Wrap"/>
+                                    <!--Metadata-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontSize="10" Foreground="#FF4C4C4C">
+					                        <Run Text="TxID: "/>
+					                        <Run Text="{Binding TxID}"/>
+					                        <Run Text="Type: "/>
+					                        <Run Text="{Binding messageType}"/>
+					                        <Run Text="RSSI: "/>
+					                        <Run Text="{Binding messageRssi}"/>
+					                        <Run Text=", SNR: "/>
+					                        <Run Text="{Binding messageSnr}"/>
+					                        <Run Text=", Length: "/>
+					                        <Run Text="{Binding messageSize}"/>
+                                            <Run Text=", Src: "/>
+					                        <Run Text="{Binding messageSource}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    
+                </ListBox>
+                
+
+
+                <!--Write Message Panel-->
+                <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" Background="#FFB1B1B1" Margin="0,5,0,0">
+                    <TextBox x:Name="MessageEntryBox" TextWrapping="Wrap" Text="Write New Message..." Height="18" Margin="5,0,5,0" Width="252" MinWidth="230" BorderBrush="#FF485E94"/>
+                    <Button x:Name="SendButton" Padding="5,2" Click="SendButton_Click" Content="Send" Width="39" Height="27" Margin="0,0,5,0"/>
+                    <Button x:Name="ClearButton" Padding="5,2,5,2" Content="Clear"  Height="27" Width="40" Margin="0,0,5,0" Click="ClearButton_Click"/>
+                    <Button x:Name="RefreshButton" Padding="5,2" Content="Refresh"  Height="27" Width="51" Click="RefreshButton_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </TabItem>
+
+
+
+    </TabControl>
+</Window>

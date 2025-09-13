@@ -1,0 +1,9 @@
+{
+	"RadioPort" : "COM4",
+	"RadioBaud" : 115200,
+	"TxID" : 1234,
+	"RespondToAck" : true,
+	"RespondToRebroadcast" : true,
+	"DictionaryFileLocation" : "N:\\UserData\\Documents\\Development\\Programming\\COMP70045-Master\\Core\\WPF04\\Resources\\Dictionaries\\",
+	"PadFileLocation" : "N:\\UserData\\Documents\\Development\\Programming\\COMP70045-Master\\Core\\WPF04\\Resources\\Pads\\"
+}
