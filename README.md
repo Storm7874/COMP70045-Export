@@ -15,8 +15,9 @@ Contains the desktop handler application, transciever firmware, and support tool
 <p>Please place this file alongside the "PadMetadata" file within the Pad directory, and update the filepaths within the metadata file accordingly.</p>
 
 <h3>Config File</h3>
-<p>An application config file is included, but the directories for the dictionary and pad files should be updated to represent their locations within the local solution.</p>
-<p>In addition to this, the COM port of the radio should be updated</p>
+<p>An application config file is included, but the directories for the dictionary and pad files should be updated to represent their locations within the local solution. (Lines 7,8 of lbms_config.lbm)</p>
+<p>Additionally, the config file location variable may need to be updated (lbms.cs - line 42)</p>
+<p>In addition to this, the COM port of the radio should be updated (lbms_config.lbm)</p>
 
 <h2>Transciever Firmware</h2>
 <p>No configuration is required for this component, if it is to be used to flash a new Heltec board, the required libraries must be configured as per the setup guide for the radio.</p>
