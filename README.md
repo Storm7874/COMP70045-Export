@@ -12,6 +12,7 @@ Contains the desktop handler application, transciever firmware, and support tool
 <p>The binary pad file is not included, but can be found at the following location:</p>
 <p></p>https://drive.google.com/file/d/1evELK3DBIOzZ1nKkQmNDcd1zdEK_Bb0O/view?usp=sharing</p>
 <p>This is due to the file size limits on Github.</p>
+<p>Please place this file alongside the "PadMetadata" file within the Pad directory, and update the filepaths within the metadata file accordingly.</p>
 
 <h3>Config File</h3>
 <p>An application config file is included, but the directories for the dictionary and pad files should be updated to represent their locations within the local solution.</p>
